@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.stxy.two.mapper.UsersMapper">
+    <!-- 登陆 -->
+    <select id="login2" parameterType="net.stxy.two.bean.Users"
+            resultType="net.stxy.two.bean.Users">
+		select * from users where user_name=#{user_name,jdbcType=VARCHAR}
+		and password=#{password,jdbcType=VARCHAR}
+	</select>
+
+    <!-- 查找学生ID-->
+    <select id="sel_one" resultType="net.stxy.two.bean.Users">
+        <!-- SELECT * FROM course,grade,students WHERE course.`cour_id`=grade.`grd_cour_id` AND students.`stu_id`=grade.`grd_stu_id` AND stu_id=#{stu_id,jdbcType=INTEGER} AND cour_name=#{cour_name,jdbcType=VARCHAR} -->
+        SELECT * FROM course,grade,students WHERE course.`cour_id`=grade.`grd_cour_id` AND
+        students.`stu_id`=grade.`grd_stu_id` AND stu_id =#{stu_id,jdbcType=INTEGER} AND
+        cour_name=#{cour_name,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查看所有学生-->
+    <select id="list2" parameterType="net.stxy.two.bean.Users"
+            resultType="net.stxy.two.bean.Users">
+		SELECT stu_id,stu_name,stu_sex,stu_class,cour_name,grades FROM course,grade,students WHERE course.`cour_id`=grade.`grd_cour_id` AND students.`stu_id`=grade.`grd_stu_id` ORDER BY stu_name,grades
+	</select>
+
+    <!-- 查看一个学生-->
+    <select id="sel_stu" parameterType="net.stxy.two.bean.Users"
+            resultType="net.stxy.two.bean.Users">
+        <!-- select * from students where stu_name=#{stu_name,jdbcType=VARCHAR} -->
+        SELECT * FROM course,grade,students WHERE course.`cour_id`=grade.`grd_cour_id` AND
+        students.`stu_id`=grade.`grd_stu_id` AND stu_name like CONCAT('%',#{stu_name,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!-- 查看班级-->
+    <select id="sel_class" parameterType="net.stxy.two.bean.Users"
+            resultType="net.stxy.two.bean.Users">
+        SELECT stu_id,stu_name,stu_sex,stu_class,cour_name,grades FROM course,grade,students WHERE
+        course.`cour_id`=grade.`grd_cour_id` AND students.`stu_id`=grade.`grd_stu_id` AND
+        stu_class=#{stu_class,jdbcType=VARCHAR}
+        <!-- select * from students where stu_class=#{stu_class,jdbcType=VARCHAR} -->
+    </select>
+
+    <!-- 查学生id->修改->执行 -->
+    <update id="update_stu_do" parameterType="net.stxy.two.bean.Users">
+		update students set stu_name=#{stu_name,jdbcType=VARCHAR},stu_sex=#{stu_sex,jdbcType=VARCHAR},stu_class=#{stu_class,jdbcType=VARCHAR} where stu_id=#{stu_id,jdbcType=INTEGER};
+		UPDATE course SET cour_name=#{cour_name,jdbcType=VARCHAR} WHERE cour_id=#{cour_id,jdbcType=INTEGER};
+		UPDATE grade SET grades=#{grades,jdbcType=INTEGER} WHERE grd_id=#{grd_id,jdbcType=INTEGER}
+	</update>
+
+    <delete id="delete_grade" parameterType="net.stxy.two.bean.Users">
+		delete from grade where grd_id=#{grd_id,jdbcType=INTEGER}
+	</delete>
+
+    <insert id="add_stu_do" parameterType="net.stxy.two.bean.Users">
+		insert into students(stu_name,stu_sex,stu_class) values(#{stu_name,jdbcType=VARCHAR},#{stu_sex,jdbcType=VARCHAR},#{stu_class,jdbcType=VARCHAR})
+	</insert>
+
+    <insert id="add_grade_do" parameterType="net.stxy.two.bean.Users">
+		INSERT INTO grade(grd_stu_id,grd_cour_id,grades) VALUES(#{stu_id,jdbcType=INTEGER},(SELECT cour_id FROM course WHERE cour_name=#{cour_name,jdbcType=VARCHAR}),#{grades,jdbcType=INTEGER})
+	</insert>
+
+
+</mapper>
