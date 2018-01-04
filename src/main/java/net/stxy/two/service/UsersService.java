@@ -24,5 +24,6 @@ public interface UsersService {
 
     public int add_grade_do(Users users);
 
+    public int update_profile(Users users);
 
 }

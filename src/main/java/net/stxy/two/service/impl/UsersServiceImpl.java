@@ -63,5 +63,8 @@ public class UsersServiceImpl implements UsersService {
         return usersMapper.add_grade_do(users);
     }
 
-
+    @Override
+    public int update_profile(Users users) {
+        return usersMapper.update_profile(users);
+    }
 }

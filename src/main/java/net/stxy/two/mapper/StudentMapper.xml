@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.stxy.two.mapper.StudentMapper">
+    <!-- 登陆 -->
+    <select id="login3" parameterType="net.stxy.two.bean.Students"
+            resultType="net.stxy.two.bean.Students">
+        SELECT *
+        FROM students
+        WHERE stu_id = #{user_name,jdbcType=VARCHAR}
+              AND password = #{password,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 注册 -->
+    <insert id="register" parameterType="net.stxy.two.bean.Students">
+        INSERT INTO students (stu_id, stu_name, stu_sex, stu_class, password) VALUES
+            (#{stu_id,jdbcType=VARCHAR}, #{stu_name,jdbcType=VARCHAR}, #{stu_sex,jdbcType=VARCHAR},
+             #{stu_class,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+    </insert>
+    <!-- 查自己的成绩 -->
+    <select id="query" parameterType="net.stxy.two.bean.Users"
+            resultType="net.stxy.two.bean.Users">
+        SELECT
+            stu_id,
+            stu_name,
+            stu_sex,
+            stu_class,
+            cour_name,
+            grades
+        FROM course, grade, students
+        WHERE course.`cour_id` = grade.`grd_cour_id` AND students.`stu_id` = grade.`grd_stu_id` AND
+              students.stu_id = #{stu_id,jdbcType=VARCHAR}
+        ORDER BY stu_name, grades
+    </select>
+
+    <update id="update_profile" parameterType="net.stxy.two.bean.Students">
+        UPDATE students
+        SET password = #{password,jdbcType=VARCHAR}
+        WHERE stu_id = #{stu_id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

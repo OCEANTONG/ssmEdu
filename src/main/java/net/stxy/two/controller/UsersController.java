@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -124,6 +125,30 @@ public class UsersController {
         //因为http://localhost:8080/ssmEdu这个前面部分是固定的
         //redirect的作用就是把indexxx.html直接加在前面那部分后面
 
+    }
+
+    //个人信息
+    @RequestMapping("/profile")
+    public String profile(Users users) {
+        return "/teacher_profile.jsp";
+    }
+
+    //更新个人信息
+    @RequestMapping("/update_profile")
+    public String update_profile(@RequestParam String user_name, @RequestParam String password, HttpSession session) {
+        Users users_login = (Users) session.getAttribute("Users");
+        Users users = new Users();
+        users.setUser_id(users_login.getUser_id());
+        users.setUser_name(user_name);
+        users.setPassword(password);
+        int res = usersService.update_profile(users);
+        System.out.println(res);
+        if (res == 1) {
+            session.setAttribute("Users", users);
+            return "/teacher_profile.jsp";
+        } else {
+            return "/update404.html";
+        }
     }
 
 

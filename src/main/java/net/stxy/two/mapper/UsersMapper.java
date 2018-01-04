@@ -34,5 +34,8 @@ public interface UsersMapper {
     //录入成绩
     public int add_grade_do(Users users);
 
+    //更新个人信息
+    public int update_profile(Users users);
+
 
 }
