@@ -64,19 +64,6 @@
         <a href="/ssmEdu/zhuye.jsp" class="logo">教务 <span class="lite">管理系统</span></a>
         <!--logo end-->
 
-        <div class="nav search-row" id="top_menu">
-            <!--  search form start -->
-            <ul class="nav top-menu">
-                <li>
-                    <form action="/ssmEdu/users/sel_stu.do" class="navbar-form" method="post">
-                        <input class="form-control" placeholder="请输入学生姓名或者班级" type="text" name="stu_name">
-                        <input class="btn btn-success" type="submit" value="搜索">
-                    </form>
-                </li>
-            </ul>
-            <!--  search form end -->
-        </div>
-
         <div class="top-nav notification-row">
             <!-- notificatoin dropdown start-->
             <ul class="nav pull-right top-menu">
