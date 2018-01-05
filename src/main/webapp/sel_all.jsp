@@ -48,6 +48,41 @@
     <script src="js/respond.min.js"></script>
     <script src="js/lte-ie7.js"></script>
     <![endif]-->
+    <style>
+        .holder {
+            margin:15px 0;
+        }
+        .holder a {
+            font-size:12px;
+            cursor:pointer;
+            margin:0 5px;
+            color:#333;
+        }
+        .holder a:hover {
+            background-color:#222;
+            color:#fff;
+        }
+        .holder a.jp-previous {
+            margin-right:15px;
+        }
+        .holder a.jp-next {
+            margin-left:15px;
+        }
+        .holder a.jp-current,a.jp-current:hover {
+            color:#FF4242;
+            font-weight:bold;
+        }
+        .holder a.jp-disabled,a.jp-disabled:hover {
+            color:#bbb;
+        }
+        .holder a.jp-current,a.jp-current:hover,.holder a.jp-disabled,a.jp-disabled:hover {
+            cursor:default;
+            background:none;
+        }
+        .holder span {
+            margin: 0 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -160,9 +195,9 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <input type="button" value="导出全部数据" id="exportBtn" style="float: right;">
-
-                        <table class="table table-striped table-advance table-hover table2excel">
-                            <tbody>
+                        <div id="holder" class="holder" style="font-size: 20px;float: right;margin-right: 20px"></div>
+                        <table class="table table-striped table-advance table-hover table2excel" >
+                            <tbody id="jpages">
                             <tr>
                                 <th>学号</th>
                                 <th>姓名</th>
@@ -236,6 +271,7 @@
 <script src="/ssmEdu/js/charts.js"></script>
 <script src="/ssmEdu/js/jquery.slimscroll.min.js"></script>
 <script src="/ssmEdu/js/jquery.table2excel.js"></script>
+<script src="/ssmEdu/js/jPages.js"></script>
 <script>
 
     //knob
@@ -295,6 +331,12 @@
     });
 
 
+    $(function() {
+        $("#holder").jPages({
+            containerID: "jpages",
+            perPage : 5
+        });
+    });
 </script>
 
 </body>
