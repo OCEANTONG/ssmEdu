@@ -61,7 +61,7 @@
         </div>
 
         <!--logo start-->
-        <a href="/ssmEdu/zhuye_student.jsp" class="logo">教务 <span class="lite">管理系统</span></a>
+        <a href="/ssmEdu/zhuye.jsp" class="logo">教务 <span class="lite">管理系统</span></a>
         <!--logo end-->
 
         <div class="nav search-row" id="top_menu">
